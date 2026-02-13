@@ -49,14 +49,15 @@ body {
     height: 4vh;
     color: white;
     font-size: 24px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .login-index, .register-index:hover {
     cursor: pointer;
 }
-
-
-
 
 input {
     color: white;
@@ -66,4 +67,54 @@ input {
 
 input:focus {
     outline: none;
+}
+
+.container-account {
+    background-color: #134980;
+    width: 75vh;
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.header-account {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60vh;
+    height: 10vh;
+    border-radius: 5px;
+    font-size: 5vh;
+    background-color: black;
+    color: white;
+}
+
+.placeholder-img-account {
+    width: 20vh;
+    height: 20vh;
+    border-radius: 999px;
+    border: 3px solid black;
+}
+
+.input-account {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.save-account {
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 10vh;
+    height: 4vh;
+    font-size: 24px;
+}
+
+.save-account:hover {
+    cursor: pointer;
 }
