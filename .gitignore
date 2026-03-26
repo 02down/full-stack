@@ -1,13 +1,9 @@
-# Ignore everything
 *
 
-# Except HTML, JavaScript, and CSS
 !*.html
 !*.js
 !*.css
 
-# Allow subdirectories to be traversed
 !*/
 
-# But still ignore node_modules even if it contains .js files
 node_modules/

@@ -1,22 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Account</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="container-account">
-        <div class="header-account">Welcome <span id="account-username"></span></div>
-        <img class="placeholder-img-account" src="img/placeholder.jpg" alt="Profile Image">
-        <div class="input-account">    
-            <input class="username-index" type="text" placeholder="Username">
-            <input class="password-index" type="password" placeholder="Password"> 
-            <button class="save-account">Save</button>
-        </div>
+      <div class="header-account">
+        Welcome: <span id="account-username"></span>
+      </div>
+
+      <div class="avatar-wrapper">
+        <img
+          class="placeholder-img-account"
+          id="profile-pic"
+          src="img/placeholder.jpg"
+          alt="Profile Image"
+        />
+        <label class="avatar-edit-btn" for="pic-upload">&#9998;</label>
+        <input
+          type="file"
+          id="pic-upload"
+          accept="image/*"
+          style="display: none"
+        />
+      </div>
+
+      <div class="input-account">
+        <input
+          class="username-index"
+          type="text"
+          id="new-username"
+          placeholder="New Username"
+        />
+        <input
+          class="password-index"
+          type="password"
+          id="new-password"
+          placeholder="New Password"
+        />
+        <button class="save-account" id="save-btn">Save</button>
+        <div id="account-message"></div>
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

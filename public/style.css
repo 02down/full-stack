@@ -1,120 +1,172 @@
-html, body {
-    height: 100%;
-    margin: 0;
+html,
+body {
+  height: 100%;
+  margin: 0;
 }
 
 body {
-    background-color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-div-index {
-    background-color: #134980;
-    width: 60vh;
-    height: 60vh;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  background-color: #134980;
+  width: 60vh;
+  height: 60vh;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .lower-div-index {
-    display: flex;
-    gap: 1vh;
-
+  display: flex;
+  gap: 1vh;
 }
 
-.username-index, .password-index, .login-index, .register-index {
-    background-color: black;
-    border: none;
-    border-radius: 5px;
-    padding: 0;
+.username-index,
+.password-index,
+.login-index,
+.register-index {
+  background-color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 0;
 }
 
-.username-index, .password-index {
-    width: 20vh;
-    height: 5vh;
+.username-index,
+.password-index {
+  width: 20vh;
+  height: 5vh;
 }
 
 .password-index {
-    margin-top: 3vh;
-    margin-bottom: 3vh;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
 }
 
-.login-index, .register-index {
-    width: 9.5vh;
-    height: 4vh;
-    color: white;
-    font-size: 24px;
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.login-index,
+.register-index {
+  width: 9.5vh;
+  height: 4vh;
+  color: white;
+  font-size: 24px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.login-index, .register-index:hover {
-    cursor: pointer;
+.login-index,
+.register-index:hover {
+  cursor: pointer;
 }
 
 input {
-    color: white;
-    font-size: 26px;
-    text-align: center;
+  color: white;
+  font-size: 26px;
+  text-align: center;
 }
 
 input:focus {
-    outline: none;
+  outline: none;
 }
 
 .container-account {
-    background-color: #134980;
-    width: 75vh;
-    height: 75vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+  background-color: #134980;
+  width: 75vh;
+  height: 75vh;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .header-account {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60vh;
-    height: 10vh;
-    border-radius: 5px;
-    font-size: 5vh;
-    background-color: black;
-    color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60vh;
+  height: 10vh;
+  border-radius: 5px;
+  font-size: 5vh;
+  background-color: black;
+  color: white;
+  gap: 1vh;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 20vh;
+  height: 20vh;
 }
 
 .placeholder-img-account {
-    width: 20vh;
-    height: 20vh;
-    border-radius: 999px;
-    border: 3px solid black;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  border: 3px solid black;
+  object-fit: cover;
+  display: block;
+}
+
+.avatar-edit-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: black;
+  color: white;
+  border-radius: 999px;
+  width: 5vh;
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2vh;
+  cursor: pointer;
+  border: 2px solid #134980;
+  transition: background-color 0.2s;
+  user-select: none;
+}
+
+.avatar-edit-btn:hover {
+  background-color: #1a6ab5;
 }
 
 .input-account {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.input-account .password-index {
+  margin-top: 1.5vh;
+  margin-bottom: 1.5vh;
 }
 
 .save-account {
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    width: 10vh;
-    height: 4vh;
-    font-size: 24px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 10vh;
+  height: 4vh;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .save-account:hover {
-    cursor: pointer;
+  background-color: #1a6ab5;
+}
+
+#account-message {
+  margin-top: 1vh;
+  font-size: 1.8vh;
+  font-family: sans-serif;
+  min-height: 2vh;
 }
