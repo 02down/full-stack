@@ -4,46 +4,49 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Account</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <div class="container-account">
-      <div class="header-account">
-        Welcome: <span id="account-username"></span>
+  <body class="account-page">
+    <div class="bg-orb orb1"></div>
+    <div class="bg-orb orb2"></div>
+
+    <div class="account-card">
+
+      <div class="account-top">
+        <div class="avatar-wrapper">
+          <img class="avatar-img" id="profile-pic" src="img/placeholder.jpg" alt="Profile" />
+          <label class="avatar-edit-btn" for="pic-upload" title="Change photo">✎</label>
+          <input type="file" id="pic-upload" accept="image/*" style="display:none" />
+        </div>
+        <div class="account-name-block">
+          <div class="account-label">Signed in as</div>
+          <div class="account-username" id="account-username"></div>
+        </div>
       </div>
 
-      <div class="avatar-wrapper">
-        <img
-          class="placeholder-img-account"
-          id="profile-pic"
-          src="img/placeholder.jpg"
-          alt="Profile Image"
-        />
-        <label class="avatar-edit-btn" for="pic-upload">&#9998;</label>
-        <input
-          type="file"
-          id="pic-upload"
-          accept="image/*"
-          style="display: none"
-        />
+      <div class="divider"></div>
+
+      <div class="fields-section">
+        <div class="field">
+          <label>New Username</label>
+          <input class="acc-input" type="text" id="new-username" autocomplete="off" placeholder="Leave blank to keep current" />
+        </div>
+        <div class="field">
+          <label>New Password</label>
+          <input class="acc-input" type="password" id="new-password" autocomplete="new-password" placeholder="Leave blank to keep current" />
+        </div>
       </div>
 
-      <div class="input-account">
-        <input
-          class="username-index"
-          type="text"
-          id="new-username"
-          placeholder="New Username"
-        />
-        <input
-          class="password-index"
-          type="password"
-          id="new-password"
-          placeholder="New Password"
-        />
-        <button class="save-account" id="save-btn">Save</button>
-        <div id="account-message"></div>
+      <div id="account-message" class="msg"></div>
+
+      <div class="action-row">
+        <button class="btn btn-primary" id="save-btn">Save Changes</button>
+        <button class="btn btn-outline-danger" id="logout-btn">Logout</button>
+        <button class="btn btn-danger" id="delete-btn">Delete Account</button>
       </div>
+
     </div>
 
     <script src="script.js"></script>

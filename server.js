@@ -27,12 +27,25 @@ app.post("/register", async (req, res) => {
   if (!username || !password)
     return res.json({ message: "Missing username or password" });
 
+  if (password.length < 5)
+    return res.json({ message: "Password must be at least 5 characters" });
+
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const query = "INSERT INTO users (username, password) VALUES (?, ?)";
-    db.query(query, [username, hashedPassword], (err) => {
-      if (err) return res.json({ message: "User already exists or DB error" });
-      res.json({ message: "User registered successfully" });
+    const checkQuery = "SELECT username FROM users WHERE username = ?";
+    db.query(checkQuery, [username], async (err, results) => {
+      if (err) return res.json({ message: "Database error" });
+      if (results.length > 0)
+        return res.json({ message: "Username is already taken" });
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const query = "INSERT INTO users (username, password) VALUES (?, ?)";
+      db.query(query, [username, hashedPassword], (err) => {
+        if (err) {
+          if (err.code === "ER_DUP_ENTRY") return res.json({ message: "Username is already taken" });
+          return res.json({ message: "DB error" });
+        }
+        res.json({ message: "User registered successfully" });
+      });
     });
   } catch {
     res.json({ message: "Error hashing password" });
@@ -62,6 +75,21 @@ app.post("/update-account", async (req, res) => {
     return res.json({ success: false, message: "Not logged in" });
 
   try {
+
+    if (newUsername) {
+      const checkResult = await new Promise((resolve, reject) => {
+        db.query("SELECT username FROM users WHERE username = ? AND username != ?", [newUsername, currentUsername], (err, rows) => {
+          if (err) reject(err);
+          else resolve(rows);
+        });
+      });
+      if (checkResult.length > 0)
+        return res.json({ success: false, message: "Username is already taken" });
+    }
+
+    if (newPassword && newPassword.length < 5)
+      return res.json({ success: false, message: "Password must be at least 5 characters" });
+
     const fields = [];
     const values = [];
 
@@ -107,6 +135,19 @@ app.get("/account-info", (req, res) => {
       username: results[0].username,
       profilePic: results[0].profile_pic,
     });
+  });
+});
+
+app.post("/delete-account", (req, res) => {
+  const { username } = req.body;
+  if (!username) return res.json({ success: false, message: "Not logged in" });
+
+  const query = "DELETE FROM users WHERE username = ?";
+  db.query(query, [username], (err, result) => {
+    if (err) return res.json({ success: false, message: "Database error" });
+    if (result.affectedRows === 0)
+      return res.json({ success: false, message: "User not found" });
+    res.json({ success: true, message: "Account deleted" });
   });
 });
 

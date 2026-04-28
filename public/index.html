@@ -4,27 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <div class="login-div-index">
-      <input
-        id="username_input"
-        class="username-index"
-        type="text"
-        placeholder="Username"
-      />
-      <input
-        id="password_input"
-        class="password-index"
-        type="password"
-        placeholder="Password"
-      />
-      <div class="lower-div-index">
-        <a id="login_button" class="login-index">Login</a>
-        <a id="register-button" class="register-index">Register</a>
+  <body class="login-page">
+    <div class="bg-orb orb1"></div>
+    <div class="bg-orb orb2"></div>
+
+    <div class="login-card">
+      <div class="login-header">
+        <span class="logo-mark">⬡</span>
+        <h1 class="login-title">Welcome back</h1>
+        <p class="login-sub">Sign in to your account</p>
       </div>
-      <div id="message"></div>
+
+      <div class="field-group">
+        <div class="field">
+          <label>Username</label>
+          <input id="username_input" type="text" placeholder="Enter username" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input id="password_input" type="password" placeholder="Enter password" />
+        </div>
+      </div>
+
+      <div id="message" class="msg"></div>
+
+      <div class="btn-row">
+        <button id="login_button" class="btn btn-primary">Login</button>
+        <button id="register-button" class="btn btn-ghost">Register</button>
+      </div>
     </div>
 
     <script src="script.js"></script>
