@@ -21,6 +21,7 @@ if (loginButton && registerButton) {
     if (password.length < 5)
       return showMessage("Password must be at least 5 characters");
 
+    // Sender registreringsdata til serveren som JSON
     fetch("/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -37,6 +38,7 @@ if (loginButton && registerButton) {
     if (!username || !password)
       return showMessage("Please enter username and password");
 
+    // Sender innloggingsdata til serveren – serveren sjekker mot databasen
     fetch("/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -45,6 +47,7 @@ if (loginButton && registerButton) {
       .then((res) => res.json())
       .then((data) => {
         if (data.message === "Login successful") {
+          // Lagrer brukernavn i localStorage så vi husker hvem som er innlogget
           localStorage.setItem("username", username);
           window.location.href = "account.html";
         } else {
@@ -58,6 +61,7 @@ if (loginButton && registerButton) {
 if (accountUsernameSpan) {
   const username = localStorage.getItem("username");
 
+  // Hvis ingen er innlogget, send tilbake til login-siden
   if (!username) {
     window.location.replace("index.html");
   }
@@ -74,6 +78,8 @@ if (accountUsernameSpan) {
   if (username) {
     accountUsernameSpan.textContent = username;
 
+    // Verifiserer mot databasen at brukeren fortsatt eksisterer
+    // Hvis ikke, rydder vi opp localStorage og sender til login
     fetch(`/account-info?username=${encodeURIComponent(username)}`)
       .then((res) => res.json())
       .then((data) => {
@@ -97,6 +103,7 @@ if (accountUsernameSpan) {
     picUpload.addEventListener("change", (e) => {
       const file = e.target.files[0];
       if (!file) return;
+      // Konverterer bildet til base64-streng så det kan sendes til og lagres i databasen
       const reader = new FileReader();
       reader.onload = (evt) => {
         pendingProfilePic = evt.target.result;
@@ -120,11 +127,13 @@ if (accountUsernameSpan) {
       if (newPassword && newPassword.length < 5)
         return showAccountMessage("Password must be at least 5 characters.", "red");
 
+      // Pakker kun med feltene som faktisk skal oppdateres
       const payload = { currentUsername };
       if (newUsername) payload.newUsername = newUsername;
       if (newPassword) payload.newPassword = newPassword;
       if (pendingProfilePic) payload.profilePic = pendingProfilePic;
 
+      // Sender til serveren som oppdaterer databasen
       fetch("/update-account", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -134,6 +143,7 @@ if (accountUsernameSpan) {
         .then((data) => {
           if (data.success) {
             if (newUsername) {
+              // Oppdaterer localStorage med nytt brukernavn
               localStorage.setItem("username", newUsername);
               accountUsernameSpan.textContent = newUsername;
             }
@@ -152,6 +162,7 @@ if (accountUsernameSpan) {
   const logoutBtn = document.getElementById("logout-btn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
+      // Fjerner brukernavn fra localStorage og sender til login
       localStorage.removeItem("username");
       window.location.replace("index.html");
     });
@@ -162,6 +173,7 @@ if (accountUsernameSpan) {
     deleteBtn.addEventListener("click", () => {
       if (!confirm("Are you sure you want to delete your account? This cannot be undone.")) return;
       const currentUsername = localStorage.getItem("username");
+      // Sender slettingsforespørsel til serveren som kjører DELETE i databasen
       fetch("/delete-account", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
