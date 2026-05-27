@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Myntspill</title>
+  <script src="https://unpkg.com/kaplay@3001.0.19/dist/kaplay.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    #back-btn {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 100;
+      background: rgba(19, 19, 26, 0.85);
+      color: #f0f0f5;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      transition: background 0.2s;
+    }
+    #back-btn:hover {
+      background: rgba(108, 99, 255, 0.35);
+    }
+  </style>
+</head>
+<body>
+  <a href="../account.html" id="back-btn">← Tilbake</a>
+
+  <script>
+    if (!localStorage.getItem("username")) {
+      window.location.replace("../index.html");
+    }
+  </script>
+
+  <script src="game.js"></script>
+</body>
+</html>

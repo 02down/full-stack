@@ -91,6 +91,8 @@ if (accountUsernameSpan) {
         if (data.profilePic) {
           document.getElementById("profile-pic").src = data.profilePic;
         }
+        const hsDisplay = document.getElementById("highscore-display");
+        if (hsDisplay) hsDisplay.textContent = data.highscore ?? "–";
       })
       .catch(() => {});
   }

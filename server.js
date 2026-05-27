@@ -143,14 +143,40 @@ app.get("/account-info", (req, res) => {
   const { username } = req.query;
   if (!username) return res.json({ success: false });
 
-  const query = "SELECT username, profile_pic FROM users WHERE username = ?";
+  const query = "SELECT username, profile_pic, highscore FROM users WHERE username = ?";
   db.query(query, [username], (err, results) => {
     if (err || results.length === 0) return res.json({ success: false });
     res.json({
       success: true,
       username: results[0].username,
       profilePic: results[0].profile_pic,
+      highscore: results[0].highscore || 0,
     });
+  });
+});
+
+// Lagrer highscore i databasen hvis den er høyere enn eksisterende
+app.post("/save-score", (req, res) => {
+  const { username, score } = req.body;
+  if (!username || score === undefined)
+    return res.json({ success: false, message: "Missing data" });
+
+  const query = "UPDATE users SET highscore = ? WHERE username = ? AND (highscore IS NULL OR highscore < ?)";
+  db.query(query, [score, username, score], (err, result) => {
+    if (err) return res.json({ success: false, message: "Database error" });
+    res.json({ success: true, updated: result.affectedRows > 0 });
+  });
+});
+
+// Henter highscore for en bruker
+app.get("/get-score", (req, res) => {
+  const { username } = req.query;
+  if (!username) return res.json({ success: false });
+
+  const query = "SELECT highscore FROM users WHERE username = ?";
+  db.query(query, [username], (err, results) => {
+    if (err || results.length === 0) return res.json({ success: false });
+    res.json({ success: true, highscore: results[0].highscore || 0 });
   });
 });
 
