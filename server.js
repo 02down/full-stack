@@ -11,6 +11,13 @@ app.use(express.json({ limit: "10mb" }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 
+const db = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+});
+
 // Åpner tilkoblingen – logger feil hvis den mislykkes
 db.connect((err) => {
   if (err) console.error("Database connection failed:", err);
@@ -42,7 +49,8 @@ app.post("/register", async (req, res) => {
       db.query(query, [username, hashedPassword], (err) => {
         if (err) {
           // ER_DUP_ENTRY er en database-feil for duplikater (ekstra sikkerhet)
-          if (err.code === "ER_DUP_ENTRY") return res.json({ message: "Username is already taken" });
+          if (err.code === "ER_DUP_ENTRY")
+            return res.json({ message: "Username is already taken" });
           return res.json({ message: "DB error" });
         }
         res.json({ message: "User registered successfully" });
@@ -82,18 +90,28 @@ app.post("/update-account", async (req, res) => {
     // Sjekker om det nye brukernavnet er tatt av en annen bruker
     if (newUsername) {
       const checkResult = await new Promise((resolve, reject) => {
-        db.query("SELECT username FROM users WHERE username = ? AND username != ?", [newUsername, currentUsername], (err, rows) => {
-          if (err) reject(err);
-          else resolve(rows);
-        });
+        db.query(
+          "SELECT username FROM users WHERE username = ? AND username != ?",
+          [newUsername, currentUsername],
+          (err, rows) => {
+            if (err) reject(err);
+            else resolve(rows);
+          },
+        );
       });
       if (checkResult.length > 0)
-        return res.json({ success: false, message: "Username is already taken" });
+        return res.json({
+          success: false,
+          message: "Username is already taken",
+        });
     }
 
     // Sjekker passordet på serversiden også
     if (newPassword && newPassword.length < 5)
-      return res.json({ success: false, message: "Password must be at least 5 characters" });
+      return res.json({
+        success: false,
+        message: "Password must be at least 5 characters",
+      });
 
     // Bygger opp UPDATE-spørringen dynamisk basert på hva brukeren endrer
     const fields = [];
@@ -136,7 +154,8 @@ app.get("/account-info", (req, res) => {
   const { username } = req.query;
   if (!username) return res.json({ success: false });
 
-  const query = "SELECT username, profile_pic, highscore FROM users WHERE username = ?";
+  const query =
+    "SELECT username, profile_pic, highscore FROM users WHERE username = ?";
   db.query(query, [username], (err, results) => {
     if (err || results.length === 0) return res.json({ success: false });
     res.json({
@@ -154,7 +173,8 @@ app.post("/save-score", (req, res) => {
   if (!username || score === undefined)
     return res.json({ success: false, message: "Missing data" });
 
-  const query = "UPDATE users SET highscore = ? WHERE username = ? AND (highscore IS NULL OR highscore < ?)";
+  const query =
+    "UPDATE users SET highscore = ? WHERE username = ? AND (highscore IS NULL OR highscore < ?)";
   db.query(query, [score, username, score], (err, result) => {
     if (err) return res.json({ success: false, message: "Database error" });
     res.json({ success: true, updated: result.affectedRows > 0 });
