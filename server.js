@@ -3,20 +3,13 @@ const mysql = require("mysql2");
 const bcrypt = require("bcrypt");
 const cors = require("cors");
 const path = require("path");
+require("dotenv").config();
 
 const app = express();
 
 app.use(express.json({ limit: "10mb" }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
-
-// Kobler til MariaDB-databasen med brukernavn og passord
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "abc12345",
-  database: "myapp",
-});
 
 // Åpner tilkoblingen – logger feil hvis den mislykkes
 db.connect((err) => {

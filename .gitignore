@@ -1,9 +1,8 @@
 *
-
 !*.html
 !*.js
 !*.css
-
+!*.env
 !*/
-
 node_modules/
+.env
